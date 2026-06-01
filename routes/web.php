@@ -16,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('books', BookController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('members', MemberController::class);
+    Route::post('borrowings/{id}/return', [BorrowingController::class, 'returnBook'])->name('borrowings.return');
     Route::resource('borrowings', BorrowingController::class);
 
     // Route KHUSUS Admin
