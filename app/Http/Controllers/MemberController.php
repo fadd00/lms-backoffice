@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class MemberController extends Controller
 {
@@ -12,7 +13,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('members/Index', [
+            'members' => Member::all()
+        ]);
     }
 
     /**

@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
 use App\Models\Borrowing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class BorrowingController extends Controller
 {
+    public function index()
+    {
+        return Inertia::render('borrowings/Index', [
+            'borrowings' => Borrowing::with(['member', 'book'])->get()
+        ]);
+    }
+
     public function store(Request $request)
     {
         DB::transaction(function () use ($request) {
