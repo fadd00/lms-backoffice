@@ -6,7 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Borrowing extends Model
 {
-    protected $fillable = ['member_id', 'book_id', 'created_by'];
+    protected $fillable = [
+        'transaction_code',
+        'member_id',
+        'book_id',
+        'borrow_date',
+        'return_date',
+        'status',
+        'created_by',
+    ];
 
     public function book()
     {
