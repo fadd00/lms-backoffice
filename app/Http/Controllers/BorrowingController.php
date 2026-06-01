@@ -30,7 +30,7 @@ class BorrowingController extends Controller
                 'borrow_date' => $request->borrow_date,
                 'return_date' => $request->return_date,
                 'status' => 'Borrowed',
-                'created_by' => auth()->id()
+                'created_by' => auth()->id(),
             ]);
         });
 
