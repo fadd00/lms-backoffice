@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Category;
 use App\Models\Book;
-use App\Models\Member;
 use App\Models\Borrowing;
+use App\Models\Category;
+use App\Models\Member;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -25,14 +25,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin Perpus',
             'email' => 'admin@lms.com',
             'password' => Hash::make('password'),
-            'role' => 'Admin'
+            'role' => 'Admin',
         ]);
 
         $pustakawan = User::create([
             'name' => 'Staf Pustakawan',
             'email' => 'staff@lms.com',
             'password' => Hash::make('password'),
-            'role' => 'Pustakawan'
+            'role' => 'Pustakawan',
         ]);
 
         // 2. Seed Categories
@@ -49,15 +49,15 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Ahmad Fadd',
                 'email' => 'ahmad@example.com',
                 'phone' => '08123456789',
-                'address' => 'Jl. Merdeka No. 10'
+                'address' => 'Jl. Merdeka No. 10',
             ],
             [
                 'member_id' => 'MBR002',
                 'name' => 'Siti Aminah',
                 'email' => 'siti@example.com',
                 'phone' => '08567891234',
-                'address' => 'Jl. Sudirman Blok B'
-            ]
+                'address' => 'Jl. Sudirman Blok B',
+            ],
         ];
         $memberModels = [];
         foreach ($members as $mem) {
@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
                 'publisher' => 'Packt',
                 'publication_year' => 2024,
                 'stock' => 10,
-                'category_id' => $categoryModels[1]->id // Teknologi
+                'category_id' => $categoryModels[1]->id, // Teknologi
             ],
             [
                 'book_code' => 'B002',
@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
                 'publisher' => 'Scribner',
                 'publication_year' => 1925,
                 'stock' => 5,
-                'category_id' => $categoryModels[2]->id // Fiksi
+                'category_id' => $categoryModels[2]->id, // Fiksi
             ],
             [
                 'book_code' => 'B003',
@@ -91,8 +91,8 @@ class DatabaseSeeder extends Seeder
                 'publisher' => 'Bantam',
                 'publication_year' => 1988,
                 'stock' => 3,
-                'category_id' => $categoryModels[0]->id // Sains
-            ]
+                'category_id' => $categoryModels[0]->id, // Sains
+            ],
         ];
         $bookModels = [];
         foreach ($books as $book) {
@@ -107,7 +107,7 @@ class DatabaseSeeder extends Seeder
             'borrow_date' => now()->subDays(2)->toDateString(),
             'return_date' => now()->addDays(5)->toDateString(),
             'status' => 'Borrowed',
-            'created_by' => $pustakawan->id
+            'created_by' => $pustakawan->id,
         ]);
 
         Borrowing::create([
@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
             'borrow_date' => now()->subDays(10)->toDateString(),
             'return_date' => now()->subDays(3)->toDateString(),
             'status' => 'Returned',
-            'created_by' => $admin->id
+            'created_by' => $admin->id,
         ]);
     }
 }

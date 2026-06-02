@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,16 +15,9 @@ class BookController extends Controller
     public function index()
     {
         return Inertia::render('books/Index', [
-            'books' => Book::with('category')->get()
+            'books' => Book::with('category')->get(),
+            'categories' => Category::all()
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -31,23 +25,17 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'book_code' => 'required|string|unique:books,book_code',
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'stock' => 'required|integer|min:0',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Book $book)
-    {
-        //
-    }
+        Book::create($validated);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Book $book)
-    {
-        //
+        return redirect()->back()->with('success', 'Buku berhasil ditambahkan.');
     }
 
     /**
@@ -55,7 +43,17 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $validated = $request->validate([
+            'book_code' => 'required|string|unique:books,book_code,' . $book->id,
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        $book->update($validated);
+
+        return redirect()->back()->with('success', 'Buku berhasil diperbarui.');
     }
 
     /**
@@ -63,6 +61,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return redirect()->back()->with('success', 'Buku berhasil dihapus.');
     }
 }

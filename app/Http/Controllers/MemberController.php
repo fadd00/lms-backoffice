@@ -31,7 +31,16 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'member_id' => 'required|string|unique:members,member_id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:members,email',
+            'phone' => 'nullable|string|max:20',
+        ]);
+
+        Member::create($validated);
+
+        return redirect()->back()->with('success', 'Anggota berhasil ditambahkan.');
     }
 
     /**
@@ -55,7 +64,16 @@ class MemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
-        //
+        $validated = $request->validate([
+            'member_id' => 'required|string|unique:members,member_id,' . $member->id,
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:members,email,' . $member->id,
+            'phone' => 'nullable|string|max:20',
+        ]);
+
+        $member->update($validated);
+
+        return redirect()->back()->with('success', 'Anggota berhasil diperbarui.');
     }
 
     /**
@@ -63,6 +81,7 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
-        //
+        $member->delete();
+        return redirect()->back()->with('success', 'Anggota berhasil dihapus.');
     }
 }
